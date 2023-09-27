@@ -1,5 +1,4 @@
 from battery.battery import Battery
-import pandas as pd
 
 
 class NubbinBattery(Battery):
@@ -8,11 +7,11 @@ class NubbinBattery(Battery):
         self.last_service_date = last_service_date
 
     def needs_service(self):
-        next_service_date = pd.to_datetime(self.last_service_date) + pd.DateOffset(
-            years=4
+        next_service_date = self.last_service_date.replace(
+            year=self.last_service_date.year + 4
         )
 
-        if next_service_date < self.current_date:
+        if next_service_date > self.current_date:
             return False
 
         return True
